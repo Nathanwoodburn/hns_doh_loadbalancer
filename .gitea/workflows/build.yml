@@ -1,0 +1,38 @@
+name: Build Docker
+run-name: Build Docker Images
+on:
+  push:
+
+jobs:
+  Build Docker:
+    runs-on: [ubuntu-latest, amd] # Add amd to require amd64
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Docker
+        run : |
+          echo "Updating apt sources"
+          echo "deb http://ftp.au.debian.org/debian buster main" > /etc/apt/sources.list
+          apt-get update --allow-unauthenticated --allow-insecure-repositories
+          apt-get install docker.io -y
+      - name: Build Docker image
+        run : |        
+          echo "${{ secrets.DOCKERGIT_TOKEN }}" | docker login git.woodburn.au -u nathanwoodburn --password-stdin
+          echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}"
+          tag=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
+          tag=${tag//\//-}
+          tag_num=${GITHUB_RUN_NUMBER}
+          echo "tag_num=$tag_num"          
+
+          if [[ "$tag" == "main" ]]; then
+            tag="latest"
+          else
+            tag_num="${tag}-${tag_num}"
+          fi
+          
+
+          docker build -t hns_doh:$tag_num .
+          docker tag hns_doh:$tag_num git.woodburn.au/nathanwoodburn/hns_doh:$tag_num
+          docker push git.woodburn.au/nathanwoodburn/hns_doh:$tag_num
+          docker tag hns_doh:$tag_num git.woodburn.au/nathanwoodburn/hns_doh:$tag
+          docker push git.woodburn.au/nathanwoodburn/hns_doh:$tag
