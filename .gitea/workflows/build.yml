@@ -29,8 +29,8 @@ jobs:
           else
             tag_num="${tag}-${tag_num}"
           fi
-          
-          echo "version: ${{ GITHUB_RUN_NUMBER }}" > content/version.txt
+          ls -l
+          echo "version: ${GITHUB_RUN_NUMBER}" > content/version.txt
           ls -l content
           docker build -t hns_doh:$tag_num .
           docker tag hns_doh:$tag_num git.woodburn.au/nathanwoodburn/hns_doh:$tag_num
