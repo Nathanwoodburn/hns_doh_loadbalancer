@@ -1,5 +1,14 @@
 # HNS DoH load balancer
 
+## How to help
+Contact Nathan.Woodburn/ via
+- Discord: https://l.woodburn.au/discord
+- Email: hnsdoh@woodburn.au
+
+You will need a static IP address that you can host the container on.
+Nathan will then add your IP to the domain which will let you create a certificate for the domain.
+
+
 ## Run with docker
 ```bash
 docker run -d --name hns_doh git.woodburn.au/nathanwoodburn/hns_doh:latest
