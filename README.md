@@ -21,7 +21,6 @@ Load balancing to the following DNS-over-HTTPS providers:
 | Provider         | URL                                      | DoH JSON | DoH Wire | DoT | DNS | HIP05 |
 | ---------------- | ---------------------------------------- | -------- | -------- | --- | --- | ----- |
 | Nathan.Woodburn/ | https://doh.hnshosting.au/dns-query      | Yes      | Yes      | Yes | Yes | Yes   |
-| EasyHandshake    | https://easyhandshake.com:8053/dns-query | Yes      | Yes      | No  | No  | No    |
 | HNS DNS          | https://doh.hnsdns.com/dns-query         | Yes      | Yes      | No  | Yes | Yes   |
 | HNS NS           | https://hnsns.net/dns-query              | Yes      | Yes      | No  | No  | Yes   |
 
@@ -29,6 +28,7 @@ Load balancing to the following DNS-over-HTTPS providers:
 ## Maybe future nodes
 | Provider         | Reason to not be added     | URL                                      | DoH JSON | DoH Wire | DoT | DNS | HIP05 |
 | ---------------- | -------------------------- | ---------------------------------------- | -------- | -------- | --- | --- | ----- |
+| EasyHandshake    | Doesn't have HIP5 support  | https://easyhandshake.com:8053/dns-query | Yes      | Yes      | No  | No  | No    |
 | Impervious       | Doesn't support JSON DoH   | https://hs.dnssec.dev/dns-query          | No       | Yes      | Yes | No  | Yes   |
 | HDNS             | Only supports NB domains   | https://hdns.io                          | No       | Yes      | No  | Yes | No    |
 
