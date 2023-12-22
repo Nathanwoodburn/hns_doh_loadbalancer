@@ -6,15 +6,13 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-chmod +x cert.sh
+chmod +x cert.sh cert.py
 sudo apt-get install -y dnsdist
 # Install certbot
 sudo apt install snapd
 sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
-
 sudo certbot certonly --manual --manual-auth-hook ./cert.py --preferred-challenges dns -d hnsdoh.com --deploy-hook ./cert.sh
-
 sudo cp ./resolved.conf /etc/systemd/resolved.conf
 sudo systemctl restart systemd-resolved
 
