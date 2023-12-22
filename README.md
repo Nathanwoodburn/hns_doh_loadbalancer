@@ -9,12 +9,15 @@ You will need a static IP address that you can host the container on.
 Nathan will then add your IP to the domain which will let you create a certificate for the domain.
 
 
-## Run with docker
-```bash
-docker run -d --name hns_doh git.woodburn.au/nathanwoodburn/hns_doh:latest
+## Install script
+```sh
+git clone https://git.woodburn.au/nathanwoodburn/hns_doh_loadbalancer.git
+cd hns_doh_loadbalancer
+sudo ./install.sh
 ```
 
-Then setup your favourite reverse proxy to the container on port 80
+
+
 
 ## Nodes
 Load balancing to the following DNS-over-HTTPS providers:
@@ -23,13 +26,13 @@ Load balancing to the following DNS-over-HTTPS providers:
 | Nathan.Woodburn/ | https://doh.hnshosting.au/dns-query      | Yes      | Yes      | Yes | Yes | Yes   |
 | HNS DNS          | https://doh.hnsdns.com/dns-query         | Yes      | Yes      | No  | Yes | Yes   |
 | HNS NS           | https://hnsns.net/dns-query              | Yes      | Yes      | No  | No  | Yes   |
+| Impervious       | https://hs.dnssec.dev/dns-query          | No       | Yes      | Yes | No  | Yes   |
 
 
 ## Maybe future nodes
 | Provider         | Reason to not be added     | URL                                      | DoH JSON | DoH Wire | DoT | DNS | HIP05 |
 | ---------------- | -------------------------- | ---------------------------------------- | -------- | -------- | --- | --- | ----- |
 | EasyHandshake    | Doesn't have HIP5 support  | https://easyhandshake.com:8053/dns-query | Yes      | Yes      | No  | No  | No    |
-| Impervious       | Doesn't support JSON DoH   | https://hs.dnssec.dev/dns-query          | No       | Yes      | Yes | No  | Yes   |
 | HDNS             | Only supports NB domains   | https://hdns.io                          | No       | Yes      | No  | Yes | No    |
 
 
