@@ -70,14 +70,8 @@
         <ul class="list-group">
             <li class="list-group-item">
                 <div>
-                    <h5 class="display-5">DNS over HTTPS</h5>
-                    <p>For DNS over HTTPS you should use either<br>- https://hnsdoh.com/dns-query<br>(Some devices require the format https://hnsdoh.com)</p>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <div>
-                    <h5 class="display-5">DNS over TLS</h5>
-                    <p>For DNS over TLS you can use a lower&nbsp;availability server below<br>- doh.hnshosting.au (Powered by Nathan.Woodburn/)<br>- hs.dnssec.dev (Powered by Impervious)</p>
+                    <h5 class="display-5">DNS over HTTPS or DNS over TLS</h5>
+                    <p>For either DNS over HTTPS or DNS over TLS you should use<br>DOH:&nbsp;https://hnsdoh.com/dns-query<br>DOT:&nbsp;https://hnsdoh.com</p>
                 </div>
             </li>
             <li class="list-group-item">
@@ -251,6 +245,13 @@
                                 <td><a href="https://hnsns.net/" style="color: rgb(255,255,255);" target="_blank">HNS NS</a></td>
                                 <td>Yes</td>
                                 <td>No</td>
+                                <td>No</td>
+                                <td title="Resolve crosschain domains">Yes</td>
+                            </tr>
+                            <tr>
+                                <td>Impervious</td>
+                                <td data-bs-toggle="tooltip" data-bss-tooltip="" title="Only supports WireFormat DNS requests">Yes</td>
+                                <td>Yes</td>
                                 <td>No</td>
                                 <td title="Resolve crosschain domains">Yes</td>
                             </tr>
