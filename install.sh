@@ -8,11 +8,11 @@ fi
 
 chmod +x cert.sh
 sudo apt-get install -y dnsdist
-# Install apt-add-repository
-sudo apt-get install -y software-properties-common
 # Install certbot
-sudo apt-add-repository ppa:certbot/certbot -y
-sudo apt install certbot -y
+sudo apt install snapd
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
+
 sudo certbot certonly --manual --manual-auth-hook ./cert.py --preferred-challenges dns -d hnsdoh.com --deploy-hook ./cert.sh
 
 sudo cp ./resolved.conf /etc/systemd/resolved.conf
