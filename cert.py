@@ -5,10 +5,19 @@ import requests
 import sys
 import time
 
-### EDIT THESE: Configuration values ###
-# CONTACT NATHAN FOR AUTH
-AUTH = "your-auth-here"
-### DO NOT EDIT BELOW THIS POINT ###
+AUTH = ""
+# Check if token file exists
+if os.path.isfile("token"):
+    print("ERROR: Token file not found")
+
+# Read token from file
+with open("token", "r") as fh:
+    AUTH = fh.read().strip()
+
+# Check if token is empty
+if len(AUTH) == 0:
+    print("ERROR: Token is empty")
+    exit(1)
 
 
 

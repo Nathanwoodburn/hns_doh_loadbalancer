@@ -11,12 +11,13 @@ Nathan will then add your IP to the domain which will let you create a certifica
 
 ## Install script
 Contact Nathan.Woodburn/ to get an Auth token.
-Edit the cert.py file and add your Auth token.
+Replace the token file with the token provided (this is case sensitive and must be exact).
 This token is used to get a certificate for the domain.
 
 ```sh
 git clone https://git.woodburn.au/nathanwoodburn/hns_doh_loadbalancer.git
 cd hns_doh_loadbalancer
+echo "TOKEN FROM NATHAN" > token
 sudo ./install.sh
 ```
 
