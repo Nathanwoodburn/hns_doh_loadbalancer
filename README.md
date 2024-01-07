@@ -5,7 +5,12 @@ Contact Nathan.Woodburn/ via
 - Email: contact@hnsdoh.com
 - Discord: https://l.woodburn.au/discord
 
-You will need a static IP address that you can host the container on.
+You will need a static IP address that you can host the server on.
+This server needs access to these ports
+- 443 (TCP) Required for DoH
+- 8053 (TCP/UDP) Required for DoT
+- 53 (TCP/UDP) Required for Plain DNS
+
 Nathan will then add your IP to the domain which will let you create a certificate for the domain.
 
 
