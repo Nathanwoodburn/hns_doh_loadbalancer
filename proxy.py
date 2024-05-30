@@ -1,6 +1,7 @@
 import socket
 from dnslib.server import DNSHandler, BaseResolver, DNSServer, DNSLogger
 from dnslib import DNSRecord
+import time
 
 UDP_IP = '127.0.0.1'
 UDP_PORT = 5350
@@ -12,15 +13,17 @@ logger = DNSLogger(log="none")
 class TCPHandler(DNSHandler):
     def handle(self):
         try:
-            data = self.request.recv(1024).strip()
-            dns_request = DNSRecord.parse(data)
-            with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as udp_socket:
-                udp_socket.sendto(data, (UDP_IP, UDP_PORT))
-                response_data, _ = udp_socket.recvfrom(1024)
-            dns_response = DNSRecord.parse(response_data)
-            self.request.sendall(response_data)
+            while True:
+                data = self.request.recv(1024).strip()
+                if not data:
+                    break
+                with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as udp_socket:
+                    udp_socket.sendto(data, (UDP_IP, UDP_PORT))
+                    response_data, _ = udp_socket.recvfrom(1024)
+                self.request.sendall(response_data)
         except Exception as e:
             print(e)
+
 
 class SimpleResolver(BaseResolver):
     def resolve(self, request, handler):
@@ -33,17 +36,12 @@ class SimpleResolver(BaseResolver):
         except Exception as e:
             return request.reply()
 
+
 def start_tcp_server():
     server = DNSServer(SimpleResolver(), address=TCP_IP, port=TCP_PORT, tcp=True, logger=logger)
     print(f"TCP server listening on {TCP_IP}:{TCP_PORT}")
-    server.start_thread()
-
-def start_udp_server():
-    server = DNSServer(SimpleResolver(), address=TCP_IP, port=TCP_PORT, logger=logger)
-    print(f"UDP server listening on {TCP_IP}:{TCP_PORT}")
     server.start()
 
 if __name__ == "__main__":
     start_tcp_server()
-    start_udp_server()
     print("Started")
