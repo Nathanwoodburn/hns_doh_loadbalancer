@@ -62,7 +62,7 @@
         <div class="text-center">
             <h1 class="text-center" style="margin-bottom: 50px;font-size: 60px;">HNS DoH</h1>
             <h2 class="text-center" style="margin-bottom: 50px;">Welcome to HNS DoH, your gateway to Handshake domains.</h2>
-            <p>Introducing our cutting-edge DNS over HTTPS (DoH) service, a revolutionary approach to secure and efficient internet communication. In a digital landscape where privacy and reliability are paramount, our service stands out by integrating multiple upstream providers, guaranteeing high availability.<br>By strategically harnessing the strengths of diverse DNS providers, we ensure that your online activities remain both private and swift. Say hello to a new era of accessing Handshake domains.</p>
+            <p>Introducing our latest Handshake DNS service, a revolutionary approach to secure and efficient internet communication. In a digital landscape where privacy and reliability are paramount, our service stands out by integrating multiple nodes to guarantee high availability.<br>Say hello to a new era of accessing Handshake domains.</p>
             <h1 style="margin-top: 50px;">Reliability is our key focus</h1>
             <p>By using a diverse group of upstream providers, we minimise downtime. Multiple of our DNS providers can go down without any downtime to our users.<br>Check out our uptime compared to our upstream DNS providers</p><a class="btn btn-primary" role="button" target="_blank" href="https://status.hnsdoh.com">Status Page</a>
         </div>
@@ -72,8 +72,14 @@
         <ul class="list-group">
             <li class="list-group-item">
                 <div>
-                    <h5 class="display-5">DNS over HTTPS or DNS over TLS</h5>
-                    <p>For either DNS over HTTPS or DNS over TLS you should use<br>DOH:&nbsp;https://hnsdoh.com/dns-query<br>DOT:&nbsp;https://hnsdoh.com</p>
+                    <h5 class="display-5">DNS over HTTPS</h5>
+                    <p>DNS over HTTPS is supported by most browsers. To add HNSDoH to your revolvers add this URL to your Secure DNS setting<br><code>https://hnsdoh.com/dns-query</code></p>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div>
+                    <h5 class="display-5">DNS over TLS</h5>
+                    <p>DNS over TLS is the best option for mobile phones. Simply set Private DNS to the hostname&nbsp;<br><code>hnsdoh.com</code></p>
                 </div>
             </li>
             <li class="list-group-item">
@@ -98,49 +104,6 @@
                     <div class="card-body">
                         <h4 class="card-title">Community run&nbsp;</h4>
                         <p class="card-text">To ensure high availability, HNSDoH is run by the community around the globe.<br>Do you have some spare compute resources?</p><a class="btn btn-primary" role="button" href="https://github.com/nathanwoodburn/hns_doh_loadbalancer/#how-to-help" target="_blank">Learn how to help</a>
-                    </div>
-                </div>
-            </div>
-            <div class="container py-4 py-xl-5">
-                <div class="row row-cols-1">
-                    <div class="col"><img class="rounded w-100 h-100 fit-cover" style="min-height: 300px;" src="assets/img/overview.webp"></div>
-                </div>
-                <div class="row row-cols-1 row-cols-lg-3">
-                    <div class="col d-flex flex-column justify-content-center p-4">
-                        <div class="text-center text-md-start d-flex flex-column align-items-center align-items-md-start align-items-lg-center mb-5" style="height: 100%;">
-                            <div class="bs-icon-md bs-icon-rounded bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-3 bs-icon md"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-1-square">
-                                    <path d="M9.283 4.002V12H7.971V5.338h-.065L6.072 6.656V5.385l1.899-1.383z"></path>
-                                    <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"></path>
-                                </svg></div>
-                            <div>
-                                <h4 style="text-align: center;">DNS Load Balanced</h4>
-                                <p>First the user randomly selects a Load balancing node from a list of available IP addresses for hnsdoh.com</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col d-flex flex-column justify-content-center p-4">
-                        <div class="text-center text-md-start d-flex flex-column align-items-center align-items-md-start align-items-lg-center mb-5" style="height: 100%;">
-                            <div class="bs-icon-md bs-icon-rounded bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-3 bs-icon md"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-2-square">
-                                    <path d="M6.646 6.24v.07H5.375v-.064c0-1.213.879-2.402 2.637-2.402 1.582 0 2.613.949 2.613 2.215 0 1.002-.6 1.667-1.287 2.43l-.096.107-1.974 2.22v.077h3.498V12H5.422v-.832l2.97-3.293c.434-.475.903-1.008.903-1.705 0-.744-.557-1.236-1.313-1.236-.843 0-1.336.615-1.336 1.306Z"></path>
-                                    <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"></path>
-                                </svg></div>
-                            <div>
-                                <h4 style="text-align: center;">Software Balanced</h4>
-                                <p>Once the user has selected a load balancing node, that node will forward the request to one of the upstream DNS providers.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col d-flex flex-column justify-content-center p-4">
-                        <div class="text-center text-md-start d-flex flex-column align-items-center align-items-md-start align-items-lg-center mb-5" style="height: 100%;">
-                            <div class="bs-icon-md bs-icon-rounded bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-3 bs-icon md"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-3-square">
-                                    <path d="M7.918 8.414h-.879V7.342h.838c.78 0 1.348-.522 1.342-1.237 0-.709-.563-1.195-1.348-1.195-.79 0-1.312.498-1.348 1.055H5.275c.036-1.137.95-2.115 2.625-2.121 1.594-.012 2.608.885 2.637 2.062.023 1.137-.885 1.776-1.482 1.875v.07c.703.07 1.71.64 1.734 1.917.024 1.459-1.277 2.396-2.93 2.396-1.705 0-2.707-.967-2.754-2.144H6.33c.059.597.68 1.06 1.541 1.066.973.006 1.6-.563 1.588-1.354-.006-.779-.621-1.318-1.541-1.318Z"></path>
-                                    <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"></path>
-                                </svg></div>
-                            <div>
-                                <h4 style="text-align: center;">High reliability</h4>
-                                <p>The load balancing nodes keep a track of any upstream DNS failures. They will then direct any new users to one of the working dns providers</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -214,48 +177,37 @@
     </section>
     <section id="providers" style="margin-top: 10vh;margin-right: 10%;margin-left: 10%;">
         <div style="text-align: center;">
-            <h1>Providers</h1>
-            <h3 style="margin-bottom: 5vh;">Upstream DNS Providers</h3>
+            <h1>Nodes</h1>
             <div>
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th>Provider</th>
-                                <th>DNS over HTTPS</th>
-                                <th>DNS over TLS</th>
-                                <th>Standard DNS</th>
-                                <th data-bs-toggle="tooltip" data-bss-tooltip="" title="Resolve crosschain domains">HIP05</th>
+                                <th>Location</th>
+                                <th>IPv4</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><a href="https://nathan.woodburn.au" style="color: rgb(255,255,255);" target="_blank">Nathan.Woodburn/</a></td>
-                                <td>Yes</td>
-                                <td>Yes</td>
-                                <td>Yes</td>
-                                <td title="Resolve crosschain domains">Yes</td>
+                                <td>Australia</td>
+                                <td>194.50.5.27</td>
                             </tr>
                             <tr>
-                                <td><a href="https://hnsdns.com/" style="color: rgb(255,255,255);" target="_blank">HNS DNS</a></td>
-                                <td>Yes</td>
-                                <td>No</td>
-                                <td>Yes</td>
-                                <td title="Resolve crosschain domains">Yes</td>
+                                <td><a href="https://nathan.woodburn.au" style="color: rgb(255,255,255);" target="_blank">Nathan.Woodburn/</a></td>
+                                <td>Canada</td>
+                                <td>139.177.195.185</td>
                             </tr>
                             <tr>
-                                <td><a href="https://hnsns.net/" style="color: rgb(255,255,255);" target="_blank">HNS NS</a></td>
-                                <td>Yes</td>
-                                <td>No</td>
-                                <td>No</td>
-                                <td title="Resolve crosschain domains">Yes</td>
+                                <td><a href="https://ezdomains.io/" style="color: rgb(255,255,255);" target="_blank">EZ Domains</a></td>
+                                <td>Netherlands</td>
+                                <td>172.233.46.92</td>
                             </tr>
                             <tr>
-                                <td><a href="https://impervious.com/" style="color: rgb(255,255,255);" target="_blank">Impervious</a></td>
-                                <td data-bs-toggle="tooltip" data-bss-tooltip="" title="Only supports WireFormat DNS requests">Yes</td>
-                                <td>Yes</td>
-                                <td>No</td>
-                                <td title="Resolve crosschain domains">Yes</td>
+                                <td><a href="https://ezdomains.io/" style="color: rgb(255,255,255);" target="_blank">EZ Domains</a></td>
+                                <td>Singapore</td>
+                                <td>172.105.120.203</td>
                             </tr>
                         </tbody>
                     </table>
@@ -264,14 +216,13 @@
         </div>
     </section>
     <footer class="text-center bg-dark">
-        <div class="container text-white py-4 py-lg-5"><a href="https://status.hnsdoh.com" target="_blank" style="margin-right: 10px;">Status Page</a><a href="https://uptime.woodburn.au/status/hnsdoh" target="_blank">Node Status</a>
+        <div class="container text-white py-4 py-lg-5"><a href="https://status.hnsdoh.com" target="_blank" style="margin-right: 10px;">Status Page</a>
             <p class="text-muted mb-0">Copyright © 2024 HNSDoH</p><!-- Matomo Image Tracker-->
 <img referrerpolicy="no-referrer-when-downgrade" src="https://analytics.woodburn.au/matomo.php?idsite=11&amp;rec=1" style="border:0" alt="" />
 <!-- End Matomo -->
         </div>
     </footer>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/bs-init.js"></script>
 </body>
 
 </html>
