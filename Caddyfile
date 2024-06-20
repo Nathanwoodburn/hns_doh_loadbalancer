@@ -1,0 +1,4 @@
+hnsdoh.com {
+        reverse_proxy h2c://127.0.0.1:8053
+        tls /etc/letsencrypt/live/hnsdoh.com/fullchain.pem /etc/letsencrypt/live/hnsdoh.com/privkey.pem
+}

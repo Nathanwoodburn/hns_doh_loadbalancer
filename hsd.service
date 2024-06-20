@@ -1,0 +1,22 @@
+[Unit]
+Description=hsd
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+Environment=HSD_PREFIX=/root/.hsd
+ExecStart=/root/.nvm/versions/node/v20.14.0/bin/node /root/hsd/bin/hsd \
+  --spv \
+  --api-key=8xJc4QC1j1xJYbo3 \
+  --rs-host=0.0.0.0 \
+  --agent=HNSDoH \
+  --http-host=0.0.0.0 \
+  --wallet-http-host=0.0.0.0 \
+  --rs-port=5353 \
+  --log-level=warning
+
+[Install]
+WantedBy=multi-user.target
