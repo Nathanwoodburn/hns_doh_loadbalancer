@@ -32,7 +32,7 @@ jobs:
           
           cd public
 
-          echo "version: ${GITHUB_RUN_NUMBER}" > content/version.txt
+          echo "version: ${GITHUB_RUN_NUMBER}" > version.txt
           docker build -t hns_doh:$tag_num .
           docker tag hns_doh:$tag_num git.woodburn.au/nathanwoodburn/hns_doh:$tag_num
           docker push git.woodburn.au/nathanwoodburn/hns_doh:$tag_num
