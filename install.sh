@@ -6,10 +6,17 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
+# Make sure working directory is /root
+if [ "$PWD" != "/root" ]
+  then echo "Please run this script from /root directory."
+  exit
+fi
+
+
 chmod +x cert.sh cert.py
 sudo apt-get install -y dnsdist
 # Install certbot
-sudo apt install snapd
+sudo apt install snapd -y
 sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
 sudo certbot certonly --manual --manual-auth-hook ./cert.py --preferred-challenges dns -d hnsdoh.com --deploy-hook ./cert.sh
@@ -46,6 +53,7 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 cd /root # Double check this path
 
 # Install Node.js
+sudo apt install build-essential -y
 nvm install 20.14.0
 npm install -g node-gyp
 

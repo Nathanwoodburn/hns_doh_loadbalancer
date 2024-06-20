@@ -1,12 +1,22 @@
 #!/bin/bash
 
-# Get Node IPs
-RESOLVED_IPS=$(dig +short hnsdoh.com)
-NODE_IPS=($RESOLVED_IPS)
-if [ ${#NODE_IPS[@]} -eq 0 ]; then
-  echo "No IP addresses resolved for hnsdoh.com. Exiting."
-  exit 1
+# Check if script has ip address as argument
+if [ -z "$1" ]; then
+  # Get Node IPs
+  RESOLVED_IPS=$(dig +short hnsdoh.com)
+  NODE_IPS=($RESOLVED_IPS)
+  if [ ${#NODE_IPS[@]} -eq 0 ]; then
+    echo "No IP addresses resolved for hnsdoh.com. Exiting."
+    exit 1
+  fi
 fi
+
+# If script has ip address as argument, use that
+if [ -n "$1" ]; then
+  # Add all arguments to NODE_IPS array
+  NODE_IPS=("$@")
+fi
+
 
 
 # Define the domain and host for kdig commands
