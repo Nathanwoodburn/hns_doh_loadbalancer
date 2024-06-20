@@ -30,7 +30,7 @@ jobs:
             tag_num="${tag}-${tag_num}"
           fi
           
-          cd website
+          cd public
 
           echo "version: ${GITHUB_RUN_NUMBER}" > content/version.txt
           docker build -t hns_doh:$tag_num .
