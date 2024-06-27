@@ -52,6 +52,9 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 
 cd /root # Double check this path
 
+# Install unbound
+sudo apt install libunbound-dev -y
+
 # Install Node.js
 sudo apt install build-essential -y
 nvm install 20.14.0
