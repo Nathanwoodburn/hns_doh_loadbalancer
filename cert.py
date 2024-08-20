@@ -7,11 +7,11 @@ import time
 
 AUTH = ""
 # Check if token file exists
-if os.path.isfile("token"):
+if os.path.isfile("/root/hns_doh_loadbalancer/token"):
     print("ERROR: Token file not found")
 
 # Read token from file
-with open("token", "r") as fh:
+with open("/root/hns_doh_loadbalancer/token", "r") as fh:
     AUTH = fh.read().strip()
 
 # Check if token is empty

@@ -19,7 +19,7 @@ sudo apt-get install -y dnsdist
 sudo apt install snapd -y
 sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
-sudo certbot certonly --manual --manual-auth-hook ./cert.py --preferred-challenges dns -d hnsdoh.com --deploy-hook ./cert.sh
+sudo certbot certonly --manual --manual-auth-hook /root/hns_doh_loadbalancer/cert.py --preferred-challenges dns -d hnsdoh.com --deploy-hook /root/hns_doh_loadbalancer/cert.sh
 sudo cp ./resolved.conf /etc/systemd/resolved.conf
 sudo systemctl restart systemd-resolved
 
