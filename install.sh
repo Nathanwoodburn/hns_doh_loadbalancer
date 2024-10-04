@@ -13,19 +13,20 @@ if [ "$PWD" != "/root" ]
 fi
 
 
-chmod +x cert.sh cert.py
+chmod +x /root/hns_doh_loadbalancer/cert.py
+chmod +x /root/hns_doh_loadbalancer/cert.sh
 sudo apt-get install -y dnsdist
 # Install certbot
 sudo apt install snapd -y
 sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
 sudo certbot certonly --manual --manual-auth-hook /root/hns_doh_loadbalancer/cert.py --preferred-challenges dns -d hnsdoh.com --deploy-hook /root/hns_doh_loadbalancer/cert.sh
-sudo cp ./resolved.conf /etc/systemd/resolved.conf
+sudo cp /root/hns_doh_loadbalancer/resolved.conf /etc/systemd/resolved.conf
 sudo systemctl restart systemd-resolved
 
 # Move the conf file to the correct location
-sudo cp ./dnsdist.conf /etc/dnsdist/dnsdist.conf
-sudo cp ./dnsdist.service /lib/systemd/system/dnsdist.service
+sudo cp /root/hns_doh_loadbalancer/dnsdist.conf /etc/dnsdist/dnsdist.conf
+sudo cp /root/hns_doh_loadbalancer/dnsdist.service /lib/systemd/system/dnsdist.service
 sudo systemctl daemon-reload
 
 # Restart dnsdist
@@ -39,7 +40,7 @@ sudo apt update
 sudo apt install caddy -y
 
 # Move the Caddyfile to the correct location
-sudo cp ./Caddyfile /etc/caddy/Caddyfile
+sudo cp /root/hns_doh_loadbalancer/Caddyfile /etc/caddy/Caddyfile
 
 # Restart caddy
 sudo systemctl restart caddy
@@ -49,8 +50,6 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-cd /root # Double check this path
 
 # Install unbound
 sudo apt install libunbound-dev -y
@@ -65,7 +64,7 @@ git clone --depth 1 --branch latest https://github.com/handshake-org/hsd.git
 cd hsd
 npm install --omit=dev
 
-sudo cp ./hsd.service /lib/systemd/system/hsd.service
+sudo cp /root/hns_doh_loadbalancer/hsd.service /lib/systemd/system/hsd.service
 sudo systemctl daemon-reload
 sudo systemctl enable hsd
 sudo systemctl start hsd
