@@ -20,10 +20,10 @@ Replace the token file with the token provided (this is case sensitive and must 
 This token is used to get a certificate for the domain.
 
 ```sh
+cd /root
 git clone https://git.woodburn.au/nathanwoodburn/hns_doh_loadbalancer.git
-cd hns_doh_loadbalancer
-echo "TOKEN FROM NATHAN" > token
-sudo ./install.sh
+echo "TOKEN FROM NATHAN" > /root/hns_doh_loadbalancer/token
+sudo hns_doh_loadbalancer/install.sh
 ```
 
 
