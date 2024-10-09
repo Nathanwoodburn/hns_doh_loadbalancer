@@ -188,7 +188,10 @@
                                 <th>Region</th>
                                 <th>Region ID</th>
                                 <th># of nodes</th>
-                                <th>Latency</th>
+                                <th>Latency&nbsp;<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 24 24" width="1em" fill="currentColor" id="refresh-ping" style="color: rgb(255,255,255);">
+                                        <path d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"></path>
+                                    </svg></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -226,61 +229,79 @@
                     </table>
                 </div>
 <script>
-function pingServer(id) {
-    return new Promise((resolve) => { // Always resolve the promise
-        if (!id) {
-            resolve({ id, pingTime: null, error: "Error: Invalid server ID" });
-            return;
+    function pingServer(id) {
+        return new Promise((resolve) => { // Always resolve the promise
+            if (!id) {
+                resolve({ id, pingTime: null, error: "Error: Invalid server ID" });
+                return;
+            }
+            console.log("Pinging server for " + id);
+
+            const startTime = performance.now(); // Record the start time
+            const serverUrl = `https://${id}.hnsdoh.com/dns-query?dns=CagBAAABAAAAAAAACHdvb2RidXJuAAABAAE=`;
+
+            // Use fetch with no-cors mode
+            fetch(serverUrl, {
+                method: 'GET',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/dns-message' },
+                cache: "no-store"
+            })
+                .then(response => {
+                    const endTime = performance.now(); // Record the end time
+                    const pingTime = endTime - startTime; // Calculate ping time
+
+                    // Resolve with the ID and ping time
+                    resolve({ id, pingTime, error: null });
+                })
+                .catch(error => {
+                    // Resolve with an error message instead of rejecting
+                    resolve({ id, pingTime: null, error: `Error pinging server` });
+                });
+        });
+    }
+function runPingTest() {
+    const regions = ["au", "eu", "na", "as", "ap"];
+    const pingPromises = regions.map(region => pingServer(region));
+
+    regions.forEach(region => {
+        const spanId = `${region}-ping`;
+        const spanElement = document.getElementById(spanId);
+        if (spanElement) {
+            spanElement.textContent = "Pinging..."; // Show Pinging... while waiting for results
         }
-        console.log("Pinging server for " + id);
+    });
 
-        const startTime = performance.now(); // Record the start time
-        const serverUrl = `https://${id}.hnsdoh.com/dns-query?dns=CagBAAABAAAAAAAACHdvb2RidXJuAAABAAE=`;
 
-        // Use fetch with no-cors mode
-        fetch(serverUrl, { 
-            method: 'GET', 
-            mode: 'no-cors', 
-            headers: { 'Content-Type': 'application/dns-message' }, 
-            cache: "no-store" 
-        })
-        .then(response => {
-            const endTime = performance.now(); // Record the end time
-            const pingTime = endTime - startTime; // Calculate ping time
+    Promise.all(pingPromises)
+        .then(results => {
+            console.log("Ping results:", results);
 
-            // Resolve with the ID and ping time
-            resolve({ id, pingTime, error: null });
+            // Update the corresponding span elements with ping results
+            results.forEach(result => {
+                const spanId = `${result.id}-ping`;
+                const spanElement = document.getElementById(spanId);
+                if (spanElement) {
+                    if (result.pingTime !== null) {
+                        spanElement.textContent = `${result.pingTime} ms`;
+                    } else {
+                        spanElement.textContent = result.error; // Display error message
+                    }
+                }
+            });
         })
         .catch(error => {
-            // Resolve with an error message instead of rejecting
-            resolve({ id, pingTime: null, error: `Error pinging server` });
+            console.error("Error pinging servers:", error);
         });
-    });
 }
+runPingTest();
 
-const regions = ["au","eu", "na", "as", "ap"];
-const pingPromises = regions.map(region => pingServer(region));
+// Add event listener to the refresh link
+document.getElementById('refresh-ping').addEventListener('click', function (event) {
+    event.preventDefault(); // Prevent the default link behavior
+    runPingTest(); // Re-run the ping test
+});
 
-Promise.all(pingPromises)
-    .then(results => {
-        console.log("Ping results:", results);
-        
-        // Update the corresponding span elements with ping results
-        results.forEach(result => {
-            const spanId = `${result.id}-ping`;
-            const spanElement = document.getElementById(spanId);
-            if (spanElement) {
-                if (result.pingTime !== null) {
-                    spanElement.textContent = `${result.pingTime} ms`;
-                } else {
-                    spanElement.textContent = result.error; // Display error message
-                }
-            }
-        });
-    })
-    .catch(error => {
-        console.error("Error pinging servers:", error);
-    });
 
 </script>
             </div>
