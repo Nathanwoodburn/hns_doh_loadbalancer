@@ -20,7 +20,6 @@ sudo apt-get install -y dnsdist
 sudo apt install snapd -y
 sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
-sudo certbot certonly --manual --manual-auth-hook /root/hns_doh_loadbalancer/cert.py --preferred-challenges dns -d hnsdoh.com --deploy-hook /root/hns_doh_loadbalancer/cert.sh
 sudo cp /root/hns_doh_loadbalancer/resolved.conf /etc/systemd/resolved.conf
 sudo systemctl restart systemd-resolved
 
@@ -31,7 +30,6 @@ sudo systemctl daemon-reload
 
 # Restart dnsdist
 sudo systemctl restart dnsdist
-
 
 # Install caddy
 curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
@@ -44,6 +42,8 @@ sudo cp /root/hns_doh_loadbalancer/Caddyfile /etc/caddy/Caddyfile
 
 # Restart caddy
 sudo systemctl restart caddy
+
+sudo certbot certonly --manual --manual-auth-hook /root/hns_doh_loadbalancer/cert.py --preferred-challenges dns -d hnsdoh.com -d *.hnsdoh.com --deploy-hook /root/hns_doh_loadbalancer/cert.sh
 
 # Install NVM
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash

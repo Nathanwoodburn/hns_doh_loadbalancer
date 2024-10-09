@@ -7,7 +7,7 @@ import time
 
 AUTH = ""
 # Check if token file exists
-if os.path.isfile("/root/hns_doh_loadbalancer/token"):
+if not os.path.isfile("/root/hns_doh_loadbalancer/token"):
     print("ERROR: Token file not found")
 
 # Read token from file
@@ -24,7 +24,7 @@ if len(AUTH) == 0:
 
 
 # URL to acme-dns instance
-ACMEDNS_URL = "https://nathan.woodburn.au/hnsdoh-acme"
+ACMEDNS_URL = "https://nathan.c.woodburn.au/hnsdoh-acme"
 # Path for acme-dns credential storage
 STORAGE_PATH = "/etc/letsencrypt/acmedns.json"
 # Whitelist for address ranges to allow the updates from

@@ -73,13 +73,15 @@
             <li class="list-group-item">
                 <div>
                     <h5 class="display-5">DNS over HTTPS</h5>
-                    <p>DNS over HTTPS is supported by most browsers. To add HNSDoH to your revolvers add this URL to your Secure DNS setting<br><code>https://hnsdoh.com/dns-query</code></p>
+                    <p>DNS over HTTPS is supported by most browsers. To add HNSDoH to your revolvers add this URL to your Secure DNS setting<br><code style="display: block;">https://hnsdoh.com/dns-query</code></p>
+                    <p>You can also specify a specific region to have faster resolution with a lower number of servers for redundancy.<br><code style="display: block;">https://{region}.hnsdoh.com/dns-query</code><span>For example the AU region can be set using:&nbsp;</span><code style="display: inline;">https://au.hnsdoh.com/dns-query</code></p>
                 </div>
             </li>
             <li class="list-group-item">
                 <div>
                     <h5 class="display-5">DNS over TLS</h5>
                     <p>DNS over TLS is the best option for mobile phones. Simply set Private DNS to the hostname&nbsp;<br><code>hnsdoh.com</code></p>
+                    <p>You can also specify a specific region to have faster resolution with a lower number of servers for redundancy.<br><code style="display: block;">{region}.hnsdoh.com</code><span>For example the AU region can be set using:&nbsp;</span><code style="display: inline;">au.hnsdoh.com</code></p>
                 </div>
             </li>
             <li class="list-group-item">
@@ -175,7 +177,116 @@
             </div>
         </div>
     </section>
-    <section id="providers" style="margin-top: 10vh;margin-right: 10%;margin-left: 10%;">
+    <section id="regions" style="margin-top: 10vh;margin-right: 10%;margin-left: 10%;">
+        <div style="text-align: center;">
+            <h1>Regions</h1>
+            <div>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Region</th>
+                                <th>Region ID</th>
+                                <th># of nodes</th>
+                                <th>Latency</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Australia</td>
+                                <td>au</td>
+                                <td>1</td>
+                                <td><span id="au-ping">Pinging...</span></td>
+                            </tr>
+                            <tr>
+                                <td>Europe</td>
+                                <td>eu</td>
+                                <td>2</td>
+                                <td><span id="eu-ping">Pinging...</span></td>
+                            </tr>
+                            <tr>
+                                <td>North America</td>
+                                <td>na</td>
+                                <td>2</td>
+                                <td><span id="na-ping">Pinging...</span></td>
+                            </tr>
+                            <tr>
+                                <td>Asia</td>
+                                <td>as</td>
+                                <td>1</td>
+                                <td><span id="as-ping">Pinging...</span></td>
+                            </tr>
+                            <tr>
+                                <td>Asia Pacific</td>
+                                <td>ap</td>
+                                <td>2</td>
+                                <td><span id="ap-ping">Pinging...</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+<script>
+function pingServer(id) {
+    return new Promise((resolve) => { // Always resolve the promise
+        if (!id) {
+            resolve({ id, pingTime: null, error: "Error: Invalid server ID" });
+            return;
+        }
+        console.log("Pinging server for " + id);
+
+        const startTime = performance.now(); // Record the start time
+        const serverUrl = `https://${id}.hnsdoh.com/dns-query?dns=CagBAAABAAAAAAAACHdvb2RidXJuAAABAAE=`;
+
+        // Use fetch with no-cors mode
+        fetch(serverUrl, { 
+            method: 'GET', 
+            mode: 'no-cors', 
+            headers: { 'Content-Type': 'application/dns-message' }, 
+            cache: "no-store" 
+        })
+        .then(response => {
+            const endTime = performance.now(); // Record the end time
+            const pingTime = endTime - startTime; // Calculate ping time
+
+            // Resolve with the ID and ping time
+            resolve({ id, pingTime, error: null });
+        })
+        .catch(error => {
+            // Resolve with an error message instead of rejecting
+            resolve({ id, pingTime: null, error: `Error pinging server` });
+        });
+    });
+}
+
+const regions = ["au","eu", "na", "as", "ap"];
+const pingPromises = regions.map(region => pingServer(region));
+
+Promise.all(pingPromises)
+    .then(results => {
+        console.log("Ping results:", results);
+        
+        // Update the corresponding span elements with ping results
+        results.forEach(result => {
+            const spanId = `${result.id}-ping`;
+            const spanElement = document.getElementById(spanId);
+            if (spanElement) {
+                if (result.pingTime !== null) {
+                    spanElement.textContent = `${result.pingTime} ms`;
+                } else {
+                    spanElement.textContent = result.error; // Display error message
+                }
+            }
+        });
+    })
+    .catch(error => {
+        console.error("Error pinging servers:", error);
+    });
+
+</script>
+            </div>
+        </div>
+    </section>
+    <section id="nodes" style="margin-top: 10vh;margin-right: 10%;margin-left: 10%;">
         <div style="text-align: center;">
             <h1>Nodes</h1>
             <div>
@@ -186,6 +297,7 @@
                                 <th>Provider</th>
                                 <th>Location</th>
                                 <th>IPv4</th>
+                                <th>Regions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -193,30 +305,41 @@
                                 <td><a href="https://nathan.woodburn.au" style="color: rgb(255,255,255);" target="_blank">Nathan.Woodburn/</a></td>
                                 <td>Australia</td>
                                 <td>194.50.5.27</td>
+                                <td>AU, AP</td>
                             </tr>
                             <tr>
                                 <td><a data-bs-toggle="tooltip" data-bss-tooltip="" href="https://hnscanada.ca/" style="color: rgb(255,255,255);" target="_blank" title="This node is managed by Nathan.Woodburn/">HNS Canada*</a></td>
                                 <td>Canada</td>
                                 <td>139.177.195.185</td>
+                                <td>NA</td>
                             </tr>
                             <tr>
                                 <td><a data-bs-toggle="tooltip" data-bss-tooltip="" href="https://ezdomains.io/" style="color: rgb(255,255,255);" target="_blank" title="This node is managed by Nathan.Woodburn/">EZ Domains*</a></td>
                                 <td>Netherlands</td>
                                 <td>172.233.46.92</td>
+                                <td>EU</td>
                             </tr>
                             <tr>
                                 <td><a data-bs-toggle="tooltip" data-bss-tooltip="" href="https://ezdomains.io/" style="color: rgb(255,255,255);" target="_blank" title="This node is managed by Nathan.Woodburn/">EZ Domains*</a></td>
                                 <td>Singapore</td>
                                 <td>172.105.120.203</td>
+                                <td>AS, AP</td>
                             </tr>
                             <tr>
-                                <td><a href="https://easyhns.com" style="color: rgb(255,255,255);" target="_blank" title="This node is managed by Nathan.Woodburn/">Easy HNS</a></td>
+                                <td><a href="https://easyhns.com" style="color: rgb(255,255,255);" target="_blank">Easy HNS</a></td>
                                 <td>England</td>
                                 <td>18.169.98.42</td>
+                                <td>EU</td>
+                            </tr>
+                            <tr>
+                                <td><a href="about:blank" style="color: rgb(255,255,255);" target="_blank">Zorro</a></td>
+                                <td>United States</td>
+                                <td>173.233.72.88</td>
+                                <td>NA</td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                </div><span>Note: Some nodes are in multiple regions to allow selecting larger regions.</span>
             </div>
         </div>
     </section>
