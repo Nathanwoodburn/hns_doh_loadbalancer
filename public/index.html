@@ -235,7 +235,6 @@
                 resolve({ id, pingTime: null, error: "Error: Invalid server ID" });
                 return;
             }
-            console.log("Pinging server for " + id);
 
             const startTime = performance.now(); // Record the start time
             const serverUrl = `https://${id}.hnsdoh.com/dns-query?dns=CagBAAABAAAAAAAACHdvb2RidXJuAAABAAE=`;
@@ -250,9 +249,11 @@
                 .then(response => {
                     const endTime = performance.now(); // Record the end time
                     const pingTime = endTime - startTime; // Calculate ping time
+                    // Round the ping time to the nearest integer
+                    const pingTimeRounded = Math.round(pingTime);
 
                     // Resolve with the ID and ping time
-                    resolve({ id, pingTime, error: null });
+                    resolve({ id, pingTime:pingTimeRounded, error: null });
                 })
                 .catch(error => {
                     // Resolve with an error message instead of rejecting
