@@ -29,9 +29,9 @@ do
     echo "Running kdig commands for NODE_IP=$NODE_IP"
 
     # Run the kdig commands
-    kdig +tls +tls-host=$TLS_HOST @$NODE_IP 1.wdbrn TXT +short
-    kdig +tls-ca +https=@$DOH_URL @$NODE_IP 2.wdbrn TXT +short
-    kdig @$NODE_IP 3.wdbrn TXT +short
+    kdig +tls +tls-host=$TLS_HOST @$NODE_IP dot.wdbrn TXT +short
+    kdig +tls-ca +https=@$DOH_URL @$NODE_IP doh.wdbrn TXT +short
+    kdig @$NODE_IP plain.wdbrn TXT +short
 
     echo "Completed kdig commands for NODE_IP=$NODE_IP"
     echo "--------------------------------------------"
