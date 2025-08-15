@@ -15,7 +15,14 @@ fi
 
 chmod +x /root/hns_doh_loadbalancer/cert.py
 chmod +x /root/hns_doh_loadbalancer/cert.sh
-sudo apt-get install -y dnsdist
+
+# Install dnsdist
+echo "deb [signed-by=/etc/apt/keyrings/dnsdist-20-pub.asc] http://repo.powerdns.com/ubuntu jammy-dnsdist-20 main" | sudo tee /etc/apt/sources.list.d/pdns.list
+wget https://upload.woodburn.au/gYy/dnsdist-20 -O /etc/apt/preferences.d/dnsdist-20
+
+sudo install -d /etc/apt/keyrings; curl https://repo.powerdns.com/FD380FBB-pub.asc | sudo tee /etc/apt/keyrings/dnsdist-20-pub.asc && sudo apt-get update && sudo apt-get install dnsdist
+
+
 # Install certbot
 sudo apt install snapd -y
 sudo snap install --classic certbot
@@ -28,14 +35,21 @@ sudo cp /root/hns_doh_loadbalancer/dnsdist.conf /etc/dnsdist/dnsdist.conf
 sudo cp /root/hns_doh_loadbalancer/dnsdist.service /lib/systemd/system/dnsdist.service
 sudo systemctl daemon-reload
 
+# Download TLDs
+wget https://data.iana.org/TLD/tlds-alpha-by-domain.txt -O /etc/dnsdist/tlds-alpha-by-domain.txt
+
+
 # Restart dnsdist
 sudo systemctl restart dnsdist
 
 # Install caddy
+sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https curl
 curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
 curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
+chmod o+r /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+chmod o+r /etc/apt/sources.list.d/caddy-stable.list
 sudo apt update
-sudo apt install caddy -y
+sudo apt install -y caddy
 
 # Move the Caddyfile to the correct location
 sudo cp /root/hns_doh_loadbalancer/Caddyfile /etc/caddy/Caddyfile
